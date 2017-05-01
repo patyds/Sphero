@@ -1,0 +1,9 @@
+Forward(70);
+Rotate(270);
+Forward(100);
+Rotate(90);
+Forward(400);
+Rotate(315);
+Forward(40);
+Rotate(45);
+Forward(100);

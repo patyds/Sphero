@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import sphero.Line;
 import sphero.Sphero;
 import sphero.SpheroSurface;
 import java.awt.BorderLayout;
@@ -33,6 +34,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.FlowLayout;
 import javax.swing.JToggleButton;
 
@@ -56,30 +58,39 @@ public class SpheroGui {
 	private JTextArea commandArea;
 	private DoubleLinkList<Sphero> list = new DoubleLinkList<>();
 	private ChooseSphero choose = new ChooseSphero();
+	Thread t1 = new Thread();
 	
 	
 	public SpheroGui(){
 		fillList();
 		sphero = workWith();
-		//sphero = new Sphero(700,50,50,"/sphero.png");
+		//sphero = new Sphero(700,5,5,"sphero.png");
 		if(sphero==null){
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
 		}else{
 			spheroSurface= new SpheroSurface(sphero);
+			spheroSurface.setSphero(sphero);
 			spheroSurface.setBackground(new Color(255, 255, 255));
-			inicialize();
+			spheroSurface.addang();
 			sphero.setY(0);
 			sphero.setX(0);
-			spheroSurface.setSphero(sphero);
+			inicialize();
 		}
 	}
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public void inicialize(){
 		//spheroSurface = new SpheroSurface(sphero)
 		//spheroSurface.setMinimumSize(new Dimension(327, 396));
 		JPrincipal = new JPanel();
 		JPrincipal.setBackground(new Color(64, 224, 208));
+		Toolkit tk = Toolkit.getDefaultToolkit();
 		JPrincipal.setLayout(new BorderLayout(0, 0));
+		 int x = ((int) tk.getScreenSize().getWidth()+1);
+	    int y = ((int) tk.getScreenSize().getHeight()-35);
+		JPrincipal.setSize(x, y);;
 		
 		JPrincipal.add(spheroSurface, BorderLayout.CENTER);
 		
@@ -115,13 +126,15 @@ public class SpheroGui {
 		lblsphero.setIcon(new ImageIcon(imgb));
 		
 		JPanel panel_6 = new JPanel();
+		panel_6.setMaximumSize(new Dimension(150, 32767));
+		panel_6.setPreferredSize(new Dimension(200, 10));
 		panel_6.setBackground(new Color(64, 224, 208));
 		pnlOptions.add(panel_6, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_6 = new GridBagLayout();
 		gbl_panel_6.columnWidths = new int[]{0, 0};
-		gbl_panel_6.rowHeights = new int[]{18, 23, 0, 23, 23, 0, 23, 0, 0, 0, 0, 18, 0, 0, 0};
+		gbl_panel_6.rowHeights = new int[]{18, 23, 0, 23, 23, 0, 23, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_6.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panel_6.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_6.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panel_6.setLayout(gbl_panel_6);
 				
 			JPanel panel_12 = new JPanel();
@@ -172,7 +185,7 @@ public class SpheroGui {
 					Numbers num = new Numbers();
 					num.setVisible(true);
 					if(num.getSteps()>0){
-						move(-num.getSteps(),"Backward");
+						move(num.getSteps(),"Backward");
 					}
 				}
 			});
@@ -237,7 +250,7 @@ public class SpheroGui {
 			gbc_tglbtnDrawLine.gridy = 7;
 			panel_6.add(tglbtnDrawLine, gbc_tglbtnDrawLine);
 			tglbtnDrawLine.setMaximumSize(new Dimension(95, 23));
-			tglbtnDrawLine.setMinimumSize(new Dimension(95, 23));
+			tglbtnDrawLine.setMinimumSize(new Dimension(150, 23));
 			tglbtnDrawLine.setFont(new Font("Trebuchet MS", Font.PLAIN, 11));
 			tglbtnDrawLine.setBackground(Color.WHITE);
 			
@@ -307,12 +320,76 @@ public class SpheroGui {
 			btnReset.setMaximumSize(new Dimension(105, 23));
 			btnReset.setMinimumSize(new Dimension(105, 23));
 			
+			JPanel panel_13 = new JPanel();
+			panel_13.setBackground(new Color(64, 224, 208));
+			GridBagConstraints gbc_panel_13 = new GridBagConstraints();
+			gbc_panel_13.insets = new Insets(0, 0, 5, 0);
+			gbc_panel_13.fill = GridBagConstraints.BOTH;
+			gbc_panel_13.gridx = 0;
+			gbc_panel_13.gridy = 13;
+			panel_6.add(panel_13, gbc_panel_13);
+			
+			JLabel lblGraphs = new JLabel("Graphs");
+			lblGraphs.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+			GridBagConstraints gbc_lblGraphs = new GridBagConstraints();
+			gbc_lblGraphs.insets = new Insets(0, 0, 5, 0);
+			gbc_lblGraphs.gridx = 0;
+			gbc_lblGraphs.gridy = 14;
+			panel_6.add(lblGraphs, gbc_lblGraphs);
+			
+			JToggleButton tglbtnShowGraph = new JToggleButton("Show Graph");
+			tglbtnShowGraph.setBackground(Color.WHITE);
+			tglbtnShowGraph.setMinimumSize(new Dimension(150, 23));
+			tglbtnShowGraph.setFont(new Font("Courier New", Font.PLAIN, 11));
+			GridBagConstraints gbc_tglbtnShowGraph = new GridBagConstraints();
+			gbc_tglbtnShowGraph.insets = new Insets(0, 0, 5, 0);
+			gbc_tglbtnShowGraph.gridx = 0;
+			gbc_tglbtnShowGraph.gridy = 15;
+			panel_6.add(tglbtnShowGraph, gbc_tglbtnShowGraph);
+			
+			JButton btnDeep = new JButton("DFS");
+			btnDeep.setBackground(Color.WHITE);
+			btnDeep.setMinimumSize(new Dimension(150, 23));
+			btnDeep.setFont(new Font("Courier New", Font.PLAIN, 11));
+			btnDeep.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+				}
+			});
+			GridBagConstraints gbc_btnDeep = new GridBagConstraints();
+			gbc_btnDeep.insets = new Insets(0, 0, 5, 0);
+			gbc_btnDeep.gridx = 0;
+			gbc_btnDeep.gridy = 16;
+			panel_6.add(btnDeep, gbc_btnDeep);
+			
+			JButton btnBreadth = new JButton("BFS");
+			btnBreadth.setBackground(Color.WHITE);
+			btnBreadth.setMaximumSize(new Dimension(200, 23));
+			btnBreadth.setPreferredSize(new Dimension(200, 23));
+			btnBreadth.setMinimumSize(new Dimension(200, 23));
+			btnBreadth.setFont(new Font("Courier New", Font.PLAIN, 11));
+			GridBagConstraints gbc_btnBreadth = new GridBagConstraints();
+			gbc_btnBreadth.insets = new Insets(0, 0, 5, 0);
+			gbc_btnBreadth.gridx = 0;
+			gbc_btnBreadth.gridy = 17;
+			panel_6.add(btnBreadth, gbc_btnBreadth);
+			
+			JButton btnDijkstra = new JButton("Dijkstra");
+			btnDijkstra.setBackground(Color.WHITE);
+			btnDijkstra.setMinimumSize(new Dimension(150, 23));
+			btnDijkstra.setPreferredSize(new Dimension(150, 23));
+			btnDijkstra.setFont(new Font("Courier New", Font.PLAIN, 11));
+			GridBagConstraints gbc_btnDijkstra = new GridBagConstraints();
+			gbc_btnDijkstra.insets = new Insets(0, 0, 5, 0);
+			gbc_btnDijkstra.gridx = 0;
+			gbc_btnDijkstra.gridy = 18;
+			panel_6.add(btnDijkstra, gbc_btnDijkstra);
+			
 			JPanel panel_11 = new JPanel();
 			panel_11.setBackground(new Color(64, 224, 208));
 			GridBagConstraints gbc_panel_11 = new GridBagConstraints();
 			gbc_panel_11.fill = GridBagConstraints.BOTH;
 			gbc_panel_11.gridx = 0;
-			gbc_panel_11.gridy = 13;
+			gbc_panel_11.gridy = 19;
 			panel_6.add(panel_11, gbc_panel_11);
 			
 			JPanel panel_7 = new JPanel();
@@ -499,12 +576,16 @@ public class SpheroGui {
 		return null;
 	}
 	
-	public void move(int steps, String direction){
+	public void move(int step, String direction){
+		int steps=step;
+		if(direction.equals("Backward")){
+			steps=step*-1;
+		}
 		int panelW = spheroSurface.getWidth();
 		int panelH = spheroSurface.getHeight();
 		int xx,yy;
 		boolean completeMove = true;
-		double rad = Math.toRadians(sphero.getAngle());
+		double rad = Math.toRadians(sphero.getAngleR());
 		/*for(i=1;i<=steps;i++){
 			xx = (int)(sphero.getX()+1*(Math.cos(rad)));
 			yy = (int)(sphero.getY()+1*Math.sin(rad));
@@ -525,24 +606,22 @@ public class SpheroGui {
 			yy = (int)(sphero.getY()+steps*Math.sin(rad));
 			int by = sphero.getY();
 			int bx = sphero.getX();
-			sphero.setBx(bx);
-			sphero.setBy(by);
 			if(xx<0||xx>panelW||yy<0||yy>panelH){
 				JOptionPane.showMessageDialog(null, "You can't move that far in that direction, sorry :|");
 				completeMove=false;
 			}else{
 				sphero.setX(xx);
 				sphero.setY(yy);
-				//Vertice v = new Vertice("1",xx,yy);
+				sphero.lines.add(new Node<Line>(new Line(xx,yy,by,bx)));
 				spheroSurface.revalidate();
 				spheroSurface.repaint();
 			}
 			if(completeMove){
 				String com = commandArea.getText();
 				if(com.length()>2){
-					commandArea.append("\n"+direction+"("+steps+");");
+					commandArea.append("\n"+direction+"("+step+");");
 				}else{
-					commandArea.append(direction+"("+steps+");");
+					commandArea.append(direction+"("+step+");");
 				}
 			}
 		} catch (InterruptedException e) {
@@ -551,8 +630,8 @@ public class SpheroGui {
 		
 	}
 	public void rotate(int s){
-		int angle = spheroSurface.setPlane(s,sphero);
-		sphero.setAngle(angle);
+		int angle = spheroSurface.setAngle(s,sphero);
+		sphero.setAngleR(angle);
 		//System.out.println("Angulos"+sphero.getAngle()+"  "+ list.getFirst().getElement().getAngle());
 		sphero.setTangle(s);
 		String com = commandArea.getText();
@@ -567,21 +646,23 @@ public class SpheroGui {
 		sphero.setY(0);
 		String[] res = ins.split("\\;");
 		int le=res.length;
-		System.out.println(ins);
-		System.out.println(sphero.queue.getSize());
+		//System.out.println(ins);
+		//System.out.println(sphero.queue.getSize());
 		if(sphero.queue.getSize()>0){
 			while(sphero.queue.getSize()>0){
 				sphero.queue.remove();
 			}
 		}
-		if(ins.substring(ins.length()-1).equals(';')){
+		if(ins.substring(ins.length()-1,ins.length()).equals(";")==false){
 			le=res.length-1;
 		}
-		System.out.println(ins.substring(ins.length()).equals(';')+"  "+(ins.length()));
-		System.out.println(sphero.queue.getSize()+"  "+res.length+"   "+le);
+		String n = ins.substring(ins.length()-1,ins.length());
+		/*System.out.println(ins.substring(ins.length()-1,ins.length()).equals(";")+"  "+(ins.length())+" ");
+		System.out.println(n);
+		System.out.println(sphero.queue.getSize()+"  "+res.length+"   "+le);*/
 		for(int i =0; i<le;i++){
 			sphero.queue.add(new Node<>(res[i]));
-			System.out.println(res[i]);
+			//System.out.println(res[i]);
 		}
 		//System.out.println(sphero.queue.getSize());
 	}
@@ -590,11 +671,18 @@ public class SpheroGui {
 		commandArea.setText("");
 		sphero.setAxis(0);
 		sphero.setTangle(0);
-		sphero.setAngle(0);
+		sphero.setAngleR(0);
+		sphero.setAngleG(0);
+		if(sphero.lines.getSize()>0){
+			while(sphero.lines.getSize()>0){
+				sphero.lines.remove();
+			}
+		}
+		//System.out.println(sphero.lines.getSize());
 		Node<String> aux =sphero.queue.getFirst();
 		for(int i=0;i<sphero.queue.getSize();i++){
 			String temp= aux.getElement();
-			System.out.println(temp+" "+sphero.queue.getSize());
+			//System.out.println(temp+" "+sphero.queue.getSize());
 			String[] spl1 = temp.split("\\(");
 			String[] spl2 =spl1[1].split("\\)");
 			int num = Integer.parseInt(spl2[0]);
@@ -604,11 +692,11 @@ public class SpheroGui {
 			}else{
 				c = temp.charAt(1);
 				if(c!='F'&&c!='R'&&c!='B'){
-					System.out.println(i+" "+c);
+					//System.out.println(i+" "+c);
 					c=temp.charAt(2);
 				}
 			}
-			System.out.println(i+" "+c);
+			//System.out.println(i+" "+c);
 			switch(c){
 				case 'F':
 					move(num,"Forward");

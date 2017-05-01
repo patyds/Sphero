@@ -1,7 +1,5 @@
 package ds;
 
-import sphero.Sphero;
-
 public class DoubleLinkList<T>{
 	protected Node<T> head;
 	protected Node<T> tail;
@@ -49,7 +47,7 @@ public class DoubleLinkList<T>{
 			head = newNode;
 			tail = newNode;
 		} else{
-			newNode.setNext(null);
+			newNode.setNext(head);
 			newNode.setPrev(tail);
 			tail.setNext(newNode);
 			tail=newNode;

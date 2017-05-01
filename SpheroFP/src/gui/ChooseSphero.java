@@ -266,7 +266,7 @@ public class ChooseSphero extends JDialog {
 		btnOk.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(id);
+				//System.out.println(id);
 				setVisible(false);
 			}
 		});
