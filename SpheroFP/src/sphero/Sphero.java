@@ -7,19 +7,21 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import ds.DoubleLinkList;
+import ds.Node;
 import ds.Queue;
 
 public class Sphero {
 	private int x;
 	private int y;
 	private int id;
-	private int angle;
+	private int angleR;
+	private int angleG=0;
 	private int tangle;
 	private Image image;
 	private int axis=0;
-	private int by;
-	private int bx;
 	public Queue<String> queue = new Queue<>();
+	public Queue<Line> lines = new Queue<Line>();
 	
 	public Sphero(int id, int x, int y, String SpheroImage) {
 		super();
@@ -35,10 +37,15 @@ public class Sphero {
 	
 	public void paintSphero(Graphics g){
 		g.drawImage(image,x,y,50,50, null);
-		if(y==0){
-			g.drawLine(0, 25, x, 25);
-		}else{
-			g.drawLine(bx, by, x, y);
+		if(lines.getSize()>0){
+			Node<Line> aux = lines.getFirst();
+			for(int i=0;i<lines.getSize();i++){
+				Line ln = aux.getElement();
+				
+					g.drawLine(ln.getBx(), ln.getBy(), ln.getX(), ln.getY());
+				
+				aux=aux.getNext();
+			}
 		}
 	}
 	
@@ -60,19 +67,22 @@ public class Sphero {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getAngle() {
-		return angle;
-	}
-	public void setAngle(int angle) {
-		this.angle = angle;
+	
+
+	public int getAngleR() {
+		return angleR;
 	}
 
-	public int getTangle() {
-		return tangle;
+	public void setAngleR(int angleR) {
+		this.angleR = angleR;
 	}
 
-	public void setTangle(int tangle) {
-		this.tangle = tangle;
+	public int getAngleG() {
+		return angleG;
+	}
+
+	public void setAngleG(int angleG) {
+		this.angleG = angleG;
 	}
 
 	public int getAxis() {
@@ -83,21 +93,14 @@ public class Sphero {
 		this.axis = axis;
 	}
 
-	public int getBy() {
-		return by;
+	public int getTangle() {
+		return tangle;
 	}
 
-	public void setBy(int by) {
-		this.by = by;
+	public void setTangle(int tangle) {
+		this.tangle = tangle;
 	}
 
-	public int getBx() {
-		return bx;
-	}
-
-	public void setBx(int bx) {
-		this.bx = bx;
-	}
 	
 	
 }

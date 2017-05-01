@@ -90,11 +90,11 @@ public class SpheroDeck {
 				num.setVisible(true);
 				if(num.getSteps()>0){
 					int steps = num.getSteps();
-					double rad = Math.toRadians(sphero.getAngle());
-					int xx = (int)(sphero.getX()+(steps*(Math.cos(rad))));
-					sphero.setX(xx);
-					int yy = (int)(sphero.getY()+(steps*Math.sin(rad)));
-					sphero.setY(yy);
+					//double rad = Math.toRadians(sphero.getAngle());
+					//int xx = (int)(sphero.getX()+(steps*(Math.cos(rad))));
+					//sphero.setX(xx);
+					//int yy = (int)(sphero.getY()+(steps*Math.sin(rad)));
+					//sphero.setY(yy);
 					//System.out.println(sphero.getY()+" "+Math.sin(rad)+" "+sphero.getX()+" "+sphero.getAngle());
 					spheroSurface.repaint();
 				}

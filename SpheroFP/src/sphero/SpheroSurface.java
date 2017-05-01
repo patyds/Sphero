@@ -3,8 +3,11 @@ package sphero;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
+
 import javax.swing.Timer.*;
 
+import ds.CircularLinked;
 import ds.DoubleLinkList;
 import ds.Node;
 
@@ -13,6 +16,9 @@ import javax.swing.*;
 public class SpheroSurface extends JPanel{
 	private Sphero sphero;
 	private boolean once = true;
+	public CircularLinked<Integer> angles = new CircularLinked<Integer>();
+	Node<Sphero> temp;
+	private int axis =0;
 	public Sphero getSphero() {
 		return sphero;
 	}
@@ -20,9 +26,6 @@ public class SpheroSurface extends JPanel{
 	public void setSphero(Sphero sphero) {
 		this.sphero = sphero;
 	}
-
-	Node<Sphero> temp;
-	private int axis =0;
 	
 	public SpheroSurface(Sphero sphero){
 		this.sphero=sphero;
@@ -33,7 +36,11 @@ public class SpheroSurface extends JPanel{
 		super.paint(g);
 		sphero.paintSphero(g);
 	}
-	
+	public void addang(){
+		for(int i=0;i<361;i++){
+			angles.addLast(new Node<Integer>(i));
+		}
+	}
 
 	public Node<Sphero> searchSphero(DoubleLinkList<Sphero> list,int id){
 		//System.out.println(";)");
@@ -49,6 +56,36 @@ public class SpheroSurface extends JPanel{
 		return null;
 	}
 	
+	public int setAngle(int plusangle, Sphero sphero){
+		int trueAngle=0;
+		int pastAngleG = sphero.getAngleG();
+		Node<Integer> aux = angles.getFirst();
+		for(int i=0; i<angles.getSize();i++){
+			int ang = aux.getElement();
+			if(ang==pastAngleG){
+				for(int j=0;j<plusangle;j++){
+					aux=aux.getNext();
+				}
+				break;
+			}
+			aux=aux.getNext();
+		}
+		int angle = aux.getElement();
+		if(angle>0&&angle<90){
+			trueAngle=360-angle;
+		}else if(angle>90&&angle<180){
+			trueAngle=180+(180-angle);
+		}else if(angle>180&&angle<270){
+			trueAngle=90+(270-angle);
+		}else if(angle>270&&angle<360){
+			trueAngle=90-(angle-270);
+		}else if(angle==0||angle==360) trueAngle=0;
+		else if(angle==90){ trueAngle=270;}
+		else if(angle==180){ trueAngle=180;}
+		else if(angle==270){ trueAngle=90;}
+		sphero.setAngleG(angle);
+		return trueAngle;
+	}
 	
 	public int setPlane(int angle, Sphero sphero){
 		//Sphero sphero = temp.getElement();
@@ -109,7 +146,7 @@ public class SpheroSurface extends JPanel{
 		if(once){
 			if(trueAngle!=0&&trueAngle!=90&&trueAngle!=180&&trueAngle!=360&&trueAngle!=270){
 				//System.out.println("True Angles: "+trueAngle+"  "+sphero.getAngle()+"  "+sphero.getTangle());
-				if(sphero.getAngle()!=0&&sphero.getAngle()!=90&&sphero.getAngle()!=180&&sphero.getAngle()!=360&&sphero.getAngle()!=270){
+				if(sphero.getAngleR()!=0&&sphero.getAngleR()!=90&&sphero.getAngleR()!=180&&sphero.getAngleR()!=360&&sphero.getAngleR()!=270){
 					//System.out.println("Past Angle"+sphero.getAngle());
 					if(trueAngle+sphero.getTangle()<=360){
 					trueAngle=-sphero.getTangle()+trueAngle;

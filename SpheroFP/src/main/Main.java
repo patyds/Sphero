@@ -20,8 +20,7 @@ public class Main {
         int y = ((int) tk.getScreenSize().getHeight()-35);
         jFrame.setTitle("Sphero");
         jFrame.setBounds(0,0,x,y);
-        Thread t1 = new Thread();
-		t1.start();
+        
         
 	}
 
