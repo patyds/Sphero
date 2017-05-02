@@ -554,6 +554,9 @@ public class SpheroGui {
 		currentSphero = choose.getId();
 		Sphero s = null;
 		//FIXX
+		if(searchSphero(currentSphero)==null){
+			s = new Sphero("basic".hashCode(),5,5,"/sphero.png");
+		}
 		if(searchSphero(currentSphero)!=null){
 			Node<Sphero> node= searchSphero(currentSphero);
 			s= node.getElement();
