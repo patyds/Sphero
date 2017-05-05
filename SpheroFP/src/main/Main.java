@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 import javax.swing.*;
 
 import gui.ChooseSphero;
+import gui.SpheroDeck;
 import gui.SpheroGui;
 
 public class Main {
