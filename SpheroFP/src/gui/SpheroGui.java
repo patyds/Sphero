@@ -59,6 +59,7 @@ public class SpheroGui {
 	private DoubleLinkList<Sphero> list = new DoubleLinkList<>();
 	private ChooseSphero choose = new ChooseSphero();
 	Thread t1 = new Thread();
+	private JToggleButton tglbtnDrawLine;
 	
 	
 	public SpheroGui(){
@@ -242,7 +243,7 @@ public class SpheroGui {
 			panel_6.add(lblTrajectory, gbc_lblTrajectory);
 			lblTrajectory.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 			
-			JToggleButton tglbtnDrawLine = new JToggleButton("Draw Line");
+			tglbtnDrawLine = new JToggleButton("Draw Line");
 			GridBagConstraints gbc_tglbtnDrawLine = new GridBagConstraints();
 			gbc_tglbtnDrawLine.anchor = GridBagConstraints.NORTH;
 			gbc_tglbtnDrawLine.insets = new Insets(0, 0, 5, 0);
@@ -309,6 +310,23 @@ public class SpheroGui {
 			btnHideSphero.setMinimumSize(new Dimension(120, 23));
 			
 			JButton btnReset = new JButton("Reset");
+			btnReset.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					commandArea.setText("");
+					sphero.setX(0);
+					sphero.setY(0);
+					if(sphero.lines.getSize()>0){
+						while(sphero.lines.getSize()>0){
+							sphero.lines.remove();
+						}
+					}
+					sphero.setAngleG(0);
+					sphero.setAngleR(0);
+					sphero.setTangle(0);
+					spheroSurface.revalidate();
+					spheroSurface.repaint();
+				}
+			});
 			btnReset.setPreferredSize(new Dimension(115, 23));
 			GridBagConstraints gbc_btnReset = new GridBagConstraints();
 			gbc_btnReset.fill = GridBagConstraints.HORIZONTAL;
@@ -555,6 +573,9 @@ public class SpheroGui {
 		currentSphero = choose.getId();
 		Sphero s = null;
 		//FIXX
+		if(searchSphero(currentSphero)==null){
+			s = new Sphero("basic".hashCode(),5,5,"/sphero.png");
+		}
 		if(searchSphero(currentSphero)!=null){
 			Node<Sphero> node= searchSphero(currentSphero);
 			s= node.getElement();
@@ -613,7 +634,9 @@ public class SpheroGui {
 			}else{
 				sphero.setX(xx);
 				sphero.setY(yy);
-				sphero.lines.add(new Node<Line>(new Line(xx,yy,by,bx)));
+				if(tglbtnDrawLine.isSelected()){
+					sphero.lines.add(new Node<Line>(new Line(xx,yy,by,bx)));
+				}
 				spheroSurface.revalidate();
 				spheroSurface.repaint();
 			}
