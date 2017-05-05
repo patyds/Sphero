@@ -165,7 +165,7 @@ public class ChooseSphero extends JDialog {
 		btnBlue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				id = "blue".hashCode();
-				imgb = new ImageIcon(this.getClass().getResource("/bluem.png")).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT);
+				imgb = new ImageIcon(this.getClass().getResource("/blue.png")).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT);
 				spheroPic.setIcon(new ImageIcon(imgb));
 			}
 		});
