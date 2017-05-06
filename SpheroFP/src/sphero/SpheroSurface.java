@@ -10,30 +10,54 @@ import javax.swing.Timer.*;
 import ds.CircularLinked;
 import ds.DoubleLinkList;
 import ds.Node;
+import ds.Queue;
+import grafos.Arista;
+import grafos.España;
+import grafos.Vertice;
 
 import javax.swing.*;
 
 public class SpheroSurface extends JPanel{
-	private Sphero sphero;
-	private boolean once = true;
 	public CircularLinked<Integer> angles = new CircularLinked<Integer>();
-	Node<Sphero> temp;
+	public España<Integer, Vertice> españa = new España<Integer, Vertice>(17);
+	public Queue<Vertice> newOrder = new Queue<Vertice>();
+	public Node<Sphero> temp;
+	private Sphero sphero;
 	private int axis =0;
-	public Sphero getSphero() {
-		return sphero;
-	}
-
-	public void setSphero(Sphero sphero) {
-		this.sphero = sphero;
-	}
+	private boolean grafo = false;
 	
 	public SpheroSurface(Sphero sphero){
 		this.sphero=sphero;
+		españa.fillCarreterras(españa);
+		
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		if(grafo){
+			if(españa.aristas.getSize()>0){
+				Node<Arista> aux = españa.aristas.getFirst();
+				for(int j=0;j<españa.aristas.getSize();j++){
+					Arista ar = aux.getElement();
+					ar.draw(g);
+					aux=aux.getNext();
+				}
+			}
+			if(españa.getSize()>0){
+				for(int i=0;i<españa.getSize();i++){
+					españa.get(i).draw(g);
+				}
+			}
+			if(newOrder.getSize()>0){
+				Node<Vertice> no = newOrder.getFirst();
+				for(int k=0;k<newOrder.getSize();k++){
+					Vertice v = no.getElement();
+					v.Visited(g);
+					no=no.getNext();
+				}
+			}
+		}
 		sphero.paintSphero(g);
 	}
 	public void addang(){
@@ -143,7 +167,7 @@ public class SpheroSurface extends JPanel{
 			else if(angle==180) trueAngle=90;
 			else if(angle==270) trueAngle=0;
 		}
-		if(once){
+		
 			if(trueAngle!=0&&trueAngle!=90&&trueAngle!=180&&trueAngle!=360&&trueAngle!=270){
 				//System.out.println("True Angles: "+trueAngle+"  "+sphero.getAngle()+"  "+sphero.getTangle());
 				if(sphero.getAngleR()!=0&&sphero.getAngleR()!=90&&sphero.getAngleR()!=180&&sphero.getAngleR()!=360&&sphero.getAngleR()!=270){
@@ -153,13 +177,11 @@ public class SpheroSurface extends JPanel{
 					}else{
 						sphero.setAxis(0);
 						int an=angle-(360-sphero.getTangle());
-						once=false;
 						setPlane(an,sphero);
 					}
 				}
-			}
 		}
-		once=true;
+		
 		//System.out.println("True Angle: "+trueAngle);
 		if(trueAngle>0&&trueAngle<=90){
 			sphero.setAxis(90);
@@ -181,6 +203,23 @@ public class SpheroSurface extends JPanel{
 
 	public void setAxis(int axis) {
 		this.axis = axis;
+	}
+	
+	
+	public Sphero getSphero() {
+		return sphero;
+	}
+
+	public void setSphero(Sphero sphero) {
+		this.sphero = sphero;
+	}
+
+	public boolean isGrafo() {
+		return grafo;
+	}
+
+	public void setGrafo(boolean grafo) {
+		this.grafo = grafo;
 	}
 	
 	

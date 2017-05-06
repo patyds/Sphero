@@ -44,6 +44,8 @@ import ds.Queue;
 import grafos.Vertice;
 
 import java.awt.Component;
+
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
@@ -60,6 +62,8 @@ public class SpheroGui {
 	private ChooseSphero choose = new ChooseSphero();
 	Thread t1 = new Thread();
 	private JToggleButton tglbtnDrawLine;
+	private JToggleButton tglbtnShowGraph;
+	private JButton btnRun, btnSave, btnLoad, btnDijkstra, btnDeep,btnBreadth;
 	
 	
 	public SpheroGui(){
@@ -177,7 +181,7 @@ public class SpheroGui {
 			btnForward.setMinimumSize(new Dimension(95, 23));
 			btnForward.setPreferredSize(new Dimension(100, 23));
 			btnForward.setBackground(Color.WHITE);
-			btnForward.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+			btnForward.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			
 			JButton btnBackward = new JButton("Backward");
 			btnBackward.setPreferredSize(new Dimension(100, 23));
@@ -199,7 +203,7 @@ public class SpheroGui {
 			btnBackward.setMaximumSize(new Dimension(95, 23));
 			btnBackward.setMinimumSize(new Dimension(95, 23));
 			btnBackward.setBackground(Color.WHITE);
-			btnBackward.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+			btnBackward.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			
 			JButton btnRotate = new JButton("Rotate");
 			btnRotate.setPreferredSize(new Dimension(100, 23));
@@ -223,7 +227,7 @@ public class SpheroGui {
 			btnRotate.setMaximumSize(new Dimension(95, 23));
 			btnRotate.setMinimumSize(new Dimension(95, 23));
 			btnRotate.setBackground(Color.WHITE);
-			btnRotate.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+			btnRotate.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			
 			JPanel panel_9 = new JPanel();
 			panel_9.setBackground(new Color(64, 224, 208));
@@ -252,7 +256,7 @@ public class SpheroGui {
 			panel_6.add(tglbtnDrawLine, gbc_tglbtnDrawLine);
 			tglbtnDrawLine.setMaximumSize(new Dimension(95, 23));
 			tglbtnDrawLine.setMinimumSize(new Dimension(150, 23));
-			tglbtnDrawLine.setFont(new Font("Trebuchet MS", Font.PLAIN, 11));
+			tglbtnDrawLine.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			tglbtnDrawLine.setBackground(Color.WHITE);
 			
 			JPanel panel_8 = new JPanel();
@@ -281,8 +285,8 @@ public class SpheroGui {
 			gbc_btnChooseSphero.gridx = 0;
 			gbc_btnChooseSphero.gridy = 10;
 			panel_6.add(btnChooseSphero, gbc_btnChooseSphero);
-			btnChooseSphero.setFont(new Font("Courier New", Font.PLAIN, 12));
-			btnChooseSphero.setBackground(Color.WHITE);
+			btnChooseSphero.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+			btnChooseSphero.setBackground(new Color(255, 255, 255));
 			btnChooseSphero.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(!commandArea.getText().equals(""))
@@ -304,8 +308,8 @@ public class SpheroGui {
 			gbc_btnHideSphero.gridy = 11;
 			panel_6.add(btnHideSphero, gbc_btnHideSphero);
 			btnHideSphero.setPreferredSize(new Dimension(115, 23));
-			btnHideSphero.setBackground(Color.WHITE);
-			btnHideSphero.setFont(new Font("Courier New", Font.PLAIN, 12));
+			btnHideSphero.setBackground(new Color(255, 255, 255));
+			btnHideSphero.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			btnHideSphero.setMaximumSize(new Dimension(110, 23));
 			btnHideSphero.setMinimumSize(new Dimension(120, 23));
 			
@@ -334,8 +338,8 @@ public class SpheroGui {
 			gbc_btnReset.gridx = 0;
 			gbc_btnReset.gridy = 12;
 			panel_6.add(btnReset, gbc_btnReset);
-			btnReset.setBackground(Color.WHITE);
-			btnReset.setFont(new Font("Courier New", Font.PLAIN, 12));
+			btnReset.setBackground(new Color(255, 255, 255));
+			btnReset.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			btnReset.setMaximumSize(new Dimension(105, 23));
 			btnReset.setMinimumSize(new Dimension(105, 23));
 			
@@ -356,22 +360,63 @@ public class SpheroGui {
 			gbc_lblGraphs.gridy = 14;
 			panel_6.add(lblGraphs, gbc_lblGraphs);
 			
-			JToggleButton tglbtnShowGraph = new JToggleButton("Show Graph");
-			tglbtnShowGraph.setBackground(Color.WHITE);
+			tglbtnShowGraph = new JToggleButton("Show Graph");
+			tglbtnShowGraph.setBackground(new Color(255, 255, 255));
 			tglbtnShowGraph.setMinimumSize(new Dimension(150, 23));
-			tglbtnShowGraph.setFont(new Font("Courier New", Font.PLAIN, 11));
+			tglbtnShowGraph.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			GridBagConstraints gbc_tglbtnShowGraph = new GridBagConstraints();
 			gbc_tglbtnShowGraph.insets = new Insets(0, 0, 5, 0);
 			gbc_tglbtnShowGraph.gridx = 0;
 			gbc_tglbtnShowGraph.gridy = 15;
 			panel_6.add(tglbtnShowGraph, gbc_tglbtnShowGraph);
+			tglbtnShowGraph.addActionListener(new ActionListener() {
+		      public void actionPerformed(ActionEvent actionEvent) {
+		        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+		        boolean selected = abstractButton.getModel().isSelected();
+		        boolean enable = true;
+		        if(selected){
+		        	spheroSurface.setGrafo(true);
+		        	btnDeep.setEnabled(true);  btnBreadth.setEnabled(true); btnDijkstra.setEnabled(true);
+		        	enable=false;
+		        }else{
+		        	spheroSurface.setGrafo(false);
+		        	 btnDeep.setEnabled(false);  btnBreadth.setEnabled(false); btnDijkstra.setEnabled(false);
+		        }
+		        spheroSurface.repaint();
+		        btnForward.setEnabled(enable); btnRotate.setEnabled(enable); btnBackward.setEnabled(enable); tglbtnDrawLine.setEnabled(enable);
+		        btnChooseSphero.setEnabled(enable); btnHideSphero.setEnabled(enable); btnReset.setEnabled(enable); btnRun.setEnabled(enable);
+		        btnSave.setEnabled(enable);btnLoad.setEnabled(enable);
+		      }
+		    });
 			
-			JButton btnDeep = new JButton("DFS");
-			btnDeep.setBackground(Color.WHITE);
+			 btnDeep = new JButton("DFS");
+			btnDeep.setBackground(new Color(255, 255, 255));
 			btnDeep.setMinimumSize(new Dimension(150, 23));
-			btnDeep.setFont(new Font("Courier New", Font.PLAIN, 11));
+			btnDeep.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			btnDeep.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					spheroSurface.españa.clearQueue(spheroSurface.newOrder);
+					spheroSurface.españa.clearV(spheroSurface.españa);
+					System.out.println(spheroSurface.newOrder.getSize());
+					Destination dest = new Destination();
+					dest.setVisible(true);
+					String start =dest.getStart();
+					String finish =dest.getFinish();
+					int in=0;
+					int fin=0;
+					int size =spheroSurface.españa.getSize();
+					for(int i=0;i<size;i++){
+						if(spheroSurface.españa.get(i).getName().equals(start)){
+							in=i;
+						}
+						if(spheroSurface.españa.get(i).getName().equals(finish)){
+							fin=i;
+						}
+					}
+					//spheroSurface.newOrder.add(new Node<Vertice>(spheroSurface.españa.get(in)));
+					spheroSurface.newOrder = spheroSurface.españa.DFS(spheroSurface.españa, in, fin);
+					System.out.println(spheroSurface.newOrder.getSize());
+					spheroSurface.repaint();
 				}
 			});
 			GridBagConstraints gbc_btnDeep = new GridBagConstraints();
@@ -379,29 +424,32 @@ public class SpheroGui {
 			gbc_btnDeep.gridx = 0;
 			gbc_btnDeep.gridy = 16;
 			panel_6.add(btnDeep, gbc_btnDeep);
+			btnDeep.setEnabled(false);
 			
-			JButton btnBreadth = new JButton("BFS");
-			btnBreadth.setBackground(Color.WHITE);
+			 btnBreadth = new JButton("BFS");
+			btnBreadth.setBackground(new Color(255, 255, 255));
 			btnBreadth.setMaximumSize(new Dimension(200, 23));
 			btnBreadth.setPreferredSize(new Dimension(200, 23));
 			btnBreadth.setMinimumSize(new Dimension(200, 23));
-			btnBreadth.setFont(new Font("Courier New", Font.PLAIN, 11));
+			btnBreadth.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			GridBagConstraints gbc_btnBreadth = new GridBagConstraints();
 			gbc_btnBreadth.insets = new Insets(0, 0, 5, 0);
 			gbc_btnBreadth.gridx = 0;
 			gbc_btnBreadth.gridy = 17;
 			panel_6.add(btnBreadth, gbc_btnBreadth);
+			btnBreadth.setEnabled(false);
 			
-			JButton btnDijkstra = new JButton("Dijkstra");
-			btnDijkstra.setBackground(Color.WHITE);
+			btnDijkstra = new JButton("Dijkstra");
+			btnDijkstra.setBackground(new Color(255, 255, 255));
 			btnDijkstra.setMinimumSize(new Dimension(150, 23));
 			btnDijkstra.setPreferredSize(new Dimension(150, 23));
-			btnDijkstra.setFont(new Font("Courier New", Font.PLAIN, 11));
+			btnDijkstra.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			GridBagConstraints gbc_btnDijkstra = new GridBagConstraints();
 			gbc_btnDijkstra.insets = new Insets(0, 0, 5, 0);
 			gbc_btnDijkstra.gridx = 0;
 			gbc_btnDijkstra.gridy = 18;
 			panel_6.add(btnDijkstra, gbc_btnDijkstra);
+			btnDijkstra.setEnabled(false);
 			
 			JPanel panel_11 = new JPanel();
 			panel_11.setBackground(new Color(64, 224, 208));
@@ -440,7 +488,7 @@ public class SpheroGui {
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JButton btnRun = new JButton("Run");
+		 btnRun = new JButton("Run");
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				saveIns(commandArea.getText());
@@ -455,11 +503,11 @@ public class SpheroGui {
 		panel.add(btnRun, gbc_btnRun);
 		btnRun.setMaximumSize(new Dimension(90, 23));
 		btnRun.setMinimumSize(new Dimension(100, 23));
-		btnRun.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		btnRun.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 		btnRun.setBackground(SystemColor.text);
 		btnRun.setPreferredSize(new Dimension(90, 23));
 		
-		JButton btnSave = new JButton("Save");
+		btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				saveIns(commandArea.getText());
@@ -491,7 +539,7 @@ public class SpheroGui {
 		btnSave.setMaximumSize(new Dimension(90, 23));
 		btnSave.setMinimumSize(new Dimension(100, 23));
 		btnSave.setBackground(Color.WHITE);
-		btnSave.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
+		btnSave.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 		btnSave.setForeground(Color.BLACK);
 		btnSave.setPreferredSize(new Dimension(100, 23));
 		
@@ -499,7 +547,7 @@ public class SpheroGui {
 		panel_1.setBackground(new Color(64, 224, 208));
 		pnlCode.add(panel_1, BorderLayout.NORTH);
 		
-		JButton btnLoad = new JButton("Load");
+		btnLoad = new JButton("Load");
 		panel_1.add(btnLoad);
 		btnLoad.setMaximumSize(new Dimension(100, 23));
 		btnLoad.setMinimumSize(new Dimension(100, 23));
