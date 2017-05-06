@@ -14,21 +14,21 @@ public class España<K, D> extends Grafo<K, D>{
 	
 	public void fillCarreterras(España<Integer, Vertice> españa){
 		españa.put(0, (new Vertice("Coruña",87,63)));
-		españa.put(1, (new Vertice("Vigo",65,126)));
+		españa.put(1, (new Vertice("Vigo",65,156)));
 		españa.put(2, (new Vertice("Valladolid",223,168)));
-		españa.put(3, (new Vertice("Madrid",283,234)));
+		españa.put(3, (new Vertice("Madrid",303,234)));
 		españa.put(4, (new Vertice("Badajoz",128,320)));
-		españa.put(5, (new Vertice("Jaén",256,356)));
-		españa.put(6, (new Vertice("Sevilla",176,416)));
-		españa.put(7, (new Vertice("Cádiz",144,470)));
-		españa.put(8, (new Vertice("Granada",282,426)));
-		españa.put(9, (new Vertice("Murcia",397,381)));
-		españa.put(10, (new Vertice("Albacete",367,307)));
-		españa.put(11, (new Vertice("Valencia",436,286)));
-		españa.put(12, (new Vertice("Barcelona",523,177)));
-		españa.put(13, (new Vertice("Gerona",572,127)));
-		españa.put(14, (new Vertice("Zaragoza",400,164)));
-		españa.put(15, (new Vertice("Bilbao",323,65)));
+		españa.put(5, (new Vertice("Jaén",276,356)));
+		españa.put(6, (new Vertice("Sevilla",199,436)));
+		españa.put(7, (new Vertice("Cádiz",124,470)));
+		españa.put(8, (new Vertice("Granada",322,446)));
+		españa.put(9, (new Vertice("Murcia",447,381)));
+		españa.put(10, (new Vertice("Albacete",387,307)));
+		españa.put(11, (new Vertice("Valencia",506,286)));
+		españa.put(12, (new Vertice("Barcelona",573,177)));
+		españa.put(13, (new Vertice("Gerona",632,127)));
+		españa.put(14, (new Vertice("Zaragoza",420,164)));
+		españa.put(15, (new Vertice("Bilbao",343,65)));
 		españa.put(16, (new Vertice("Oviedo",196,63)));
 		for(int i=0;i<españa.edges.length;i++){
 			for(int j=0; j<españa.edges.length;j++){

@@ -1,6 +1,8 @@
 package grafos;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Arista {
 	private int weigth;
@@ -14,8 +16,10 @@ public class Arista {
 	}
 	
 	public void drawA(Graphics g){
-		g.setColor(Color.BLACK);
-		g.drawLine(v1.getX()+15, v1.getY()+15, v2.getX()+15, v2.getY()+15);
+		Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(3));
+		g2.setColor(Color.BLACK);
+		g2.drawLine(v1.getX()+13, v1.getY()+13, v2.getX()+13, v2.getY()+13);
 	}
 	public void drawWeight(Graphics g){
 		g.setColor(Color.black);

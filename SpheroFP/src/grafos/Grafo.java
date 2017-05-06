@@ -31,11 +31,12 @@ public class Grafo<K,D>extends Hashtable<K,D>{
 		DoubleLinkList<Vertice> ar = v.aristas;
 		Node<Vertice> aux = ar.getFirst();
 		boolean notsaved = true;
-		while(aux.getNext()!=null){
+		for(int h=0;h<ar.getSize();h++){
 			if(!aux.getElement().isVisited()){
+				notsaved=true;
 				if(stack.getSize()>0){
 					Node<Vertice> temp = stack.getFirst();
-					while(temp.getNext()!=null){
+					for(int a=0;a<stack.getSize();a++){
 						if(temp.getElement().getName().equals(aux.getElement().getName())){
 							notsaved= false;
 							break;
@@ -49,22 +50,24 @@ public class Grafo<K,D>extends Hashtable<K,D>{
 			}
 		aux=aux.getNext();
 		}
-		//System.out.println(stack.getFirst().getElement().getName());
+		System.out.println(stack.getFirst().getElement().getName());
 		newOrder.add(new Node<Vertice>(stack.getFirst().getElement()));
 		//System.out.println(newOrder.getLast().getElement().getName());
 		int j;
 		for(j=0;j<grafo.getSize();j++){
+			if(grafo.get(f).getName().equals(stack.getFirst().getElement().getName())){
+				clearStack(stack);
+				System.out.println(stack.getSize());
+				return newOrder;
+			}
 			if(grafo.get(j).getName().equals(stack.getFirst().getElement().getName())){
 				break;
-			}
-			if(grafo.get(f).getName().equals(stack.getFirst().getElement().getName())){
-				return newOrder;
 			}
 		}
 		//System.out.println(stack.getFirst().getElement().getName());
 		stack.pop();
 		DFS(grafo,j,f);
-		
+		clearV(grafo);
 		return newOrder;
 	}
 	public int getSize() {
@@ -75,6 +78,21 @@ public class Grafo<K,D>extends Hashtable<K,D>{
 		this.size = size;
 	}
 	
+	public void clearV(Grafo<Integer, Vertice> grafo){
+		for(int i=0;i<grafo.getSize();i++){
+			grafo.get(i).setVisited(false);
+		}	
+	}
 	
+	public void clearQueue(Queue<Vertice> newOrder){
+		while(newOrder.getSize()>0){
+			newOrder.remove();
+		}
+	}
+	public void clearStack(Stack<Vertice> stack){
+		while(stack.getSize()>0){
+			stack.pop();
+		}
+	}
 	
 }
