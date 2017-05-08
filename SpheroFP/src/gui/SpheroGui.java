@@ -397,6 +397,7 @@ public class SpheroGui {
 				public void actionPerformed(ActionEvent arg0) {
 					spheroSurface.españa.clearQueue(spheroSurface.newOrder);
 					spheroSurface.españa.clearV(spheroSurface.españa);
+					spheroSurface.españa.clearStack(spheroSurface.dijkstra);
 					System.out.println(spheroSurface.newOrder.getSize());
 					Destination dest = new Destination();
 					dest.setVisible(true);
@@ -432,6 +433,32 @@ public class SpheroGui {
 			btnBreadth.setPreferredSize(new Dimension(200, 23));
 			btnBreadth.setMinimumSize(new Dimension(200, 23));
 			btnBreadth.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+			btnBreadth.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					spheroSurface.españa.clearQueue(spheroSurface.newOrder);
+					spheroSurface.españa.clearV(spheroSurface.españa);
+					spheroSurface.españa.clearStack(spheroSurface.dijkstra);
+					Destination dest = new Destination();
+					dest.setVisible(true);
+					String start =dest.getStart();
+					String finish =dest.getFinish();
+					int in=0;
+					int fin=0;
+					int size =spheroSurface.españa.getSize();
+					for(int i=0;i<size;i++){
+						if(spheroSurface.españa.get(i).getName().equals(start)){
+							in=i;
+						}
+						if(spheroSurface.españa.get(i).getName().equals(finish)){
+							fin=i;
+						}
+					}
+					//spheroSurface.newOrder.add(new Node<Vertice>(spheroSurface.españa.get(in)));
+					spheroSurface.newOrder = spheroSurface.españa.BFS(spheroSurface.españa, in, fin);
+					//ystem.out.println(spheroSurface.newOrder.getSize());
+					spheroSurface.repaint();
+				}
+			});
 			GridBagConstraints gbc_btnBreadth = new GridBagConstraints();
 			gbc_btnBreadth.insets = new Insets(0, 0, 5, 0);
 			gbc_btnBreadth.gridx = 0;
@@ -440,6 +467,32 @@ public class SpheroGui {
 			btnBreadth.setEnabled(false);
 			
 			btnDijkstra = new JButton("Dijkstra");
+			btnDijkstra.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					spheroSurface.españa.clearQueue(spheroSurface.newOrder);
+					spheroSurface.españa.clearV(spheroSurface.españa);
+					Destination dest = new Destination();
+					dest.setVisible(true);
+					String start =dest.getStart();
+					String finish =dest.getFinish();
+					int in=0;
+					int fin=0;
+					int size =spheroSurface.españa.getSize();
+					for(int i=0;i<size;i++){
+						if(spheroSurface.españa.get(i).getName().equals(start)){
+							in=i;
+						}
+						if(spheroSurface.españa.get(i).getName().equals(finish)){
+							fin=i;
+						}
+					}
+					//spheroSurface.newOrder.add(new Node<Vertice>(spheroSurface.españa.get(in)));
+					spheroSurface.españa.computePaths(spheroSurface.españa, in);
+					spheroSurface.dijkstra = spheroSurface.españa.shortestPath(spheroSurface.españa, fin);
+					//ystem.out.println(spheroSurface.newOrder.getSize());
+					spheroSurface.repaint();
+				}
+			});
 			btnDijkstra.setBackground(new Color(255, 255, 255));
 			btnDijkstra.setMinimumSize(new Dimension(150, 23));
 			btnDijkstra.setPreferredSize(new Dimension(150, 23));

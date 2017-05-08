@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import ds.DoubleLinkList;
 
-public class Vertice {
+public class Vertice implements Comparable {
 	private String name;
 	private int x;
 	private int y;
@@ -13,7 +13,9 @@ public class Vertice {
 	private int height;
 	public DoubleLinkList<Vertice> aristas;
 	private boolean visited;
-	
+	private int cost;
+	private Vertice prev;
+
 	public Vertice(String name, int x, int y) {
 		this.name = name;
 		this.x = x;
@@ -22,6 +24,7 @@ public class Vertice {
 		height = 26;
 		visited=false;
 		aristas=new DoubleLinkList<Vertice>();
+		cost=Integer.MAX_VALUE;
 	}
 	
 	public void drawV(Graphics g){
@@ -93,6 +96,31 @@ public class Vertice {
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+
+	public Vertice getPrev() {
+		return prev;
+	}
+
+	public void setPrev(Vertice prev) {
+		this.prev = prev;
+	}
+	public int compareTo(Vertice other) {
+	        return Integer.compare(cost, other.cost);
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		Vertice other = (Vertice)o;
+        return Double.compare(cost, other.cost);
 	}
 
 	
