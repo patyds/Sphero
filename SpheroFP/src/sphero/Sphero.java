@@ -49,6 +49,7 @@ public class Sphero {
 		}
 	}
 	
+	
 	public int getX() {
 		return x;
 	}
