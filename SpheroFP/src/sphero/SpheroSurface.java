@@ -11,7 +11,6 @@ import ds.CircularLinked;
 import ds.DoubleLinkList;
 import ds.Node;
 import ds.Queue;
-import ds.Stack;
 import grafos.Arista;
 import grafos.España;
 import grafos.Vertice;
@@ -23,8 +22,7 @@ public class SpheroSurface extends JPanel{
 	public España<Integer, Vertice> españa = new España<Integer, Vertice>(17);
 	public Queue<Vertice> newOrder = new Queue<Vertice>();
 	public Node<Sphero> temp;
-	public Stack<Vertice> dijkstra = new Stack<Vertice>();
-	private Sphero sphero;
+	public Sphero sphero;
 	private int axis =0;
 	private boolean grafo = false;
 	
@@ -33,6 +31,7 @@ public class SpheroSurface extends JPanel{
 		españa.fillCarreterras(españa);
 		
 	}
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -58,18 +57,9 @@ public class SpheroSurface extends JPanel{
 					no=no.getNext();
 				}
 			}
-			if(dijkstra.getSize()>0){
-				Node<Vertice> no = dijkstra.getFirst();
-				for(int k=0;k<dijkstra.getSize();k++){
-					Vertice v = no.getElement();
-					v.Visited(g);
-					no=no.getNext();
-				}
-			}
 		}
 		sphero.paintSphero(g);
-	} 
-	
+	}
 	public void addang(){
 		for(int i=0;i<361;i++){
 			angles.addLast(new Node<Integer>(i));

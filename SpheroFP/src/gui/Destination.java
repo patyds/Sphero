@@ -40,17 +40,8 @@ public class Destination extends JDialog {
 		gbl_panel.columnWidths = new int[]{0, 0, 0, 0, 0};
 		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
-		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(255, 255, 255));
-		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
-		gbc_panel_4.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_4.fill = GridBagConstraints.BOTH;
-		gbc_panel_4.gridx = 3;
-		gbc_panel_4.gridy = 0;
-		panel.add(panel_4, gbc_panel_4);
 		
 		JLabel lblStart = new JLabel("Start");
 		lblStart.setFont(new Font("Trebuchet MS", Font.BOLD, 13));
@@ -85,14 +76,6 @@ public class Destination extends JDialog {
 		gbc_finishBox.gridx = 3;
 		gbc_finishBox.gridy = 2;
 		panel.add(finishBox, gbc_finishBox);
-		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(new Color(255, 255, 255));
-		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
-		gbc_panel_5.fill = GridBagConstraints.BOTH;
-		gbc_panel_5.gridx = 3;
-		gbc_panel_5.gridy = 3;
-		panel.add(panel_5, gbc_panel_5);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(64, 224, 208));

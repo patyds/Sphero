@@ -18,6 +18,7 @@ public class Sphero {
 	private int angleR;
 	private int angleG=0;
 	private int tangle;
+	private boolean visible = true;
 	private Image image;
 	private int axis=0;
 	public Queue<String> queue = new Queue<>();
@@ -28,6 +29,7 @@ public class Sphero {
 		this.x = x;
 		this.y = y;
 		this.id = id;
+		visible = true;
 		try {
 			image= ImageIO.read(this.getClass().getResource(SpheroImage));
 		} catch (IOException e) {
@@ -48,7 +50,6 @@ public class Sphero {
 			}
 		}
 	}
-	
 	
 	public int getX() {
 		return x;
@@ -100,6 +101,16 @@ public class Sphero {
 
 	public void setTangle(int tangle) {
 		this.tangle = tangle;
+	}
+	
+	public boolean isVisible()
+	{
+		return visible;
+	}
+	
+	public void setVisible(boolean visible)
+	{
+		this.visible = visible;
 	}
 
 	
